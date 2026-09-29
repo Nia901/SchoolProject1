@@ -1,0 +1,55 @@
+﻿@model SchoolProject1.ViewModels.School.SchoolDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>School</h4>
+    <hr />
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SchoolAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SchoolAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentsCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+

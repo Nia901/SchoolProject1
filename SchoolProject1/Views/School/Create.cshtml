@@ -1,0 +1,21 @@
+﻿@model SchoolProject1.ViewModels.School.SchoolCreateViewModel
+
+<h1>Добавяне на училище</h1>
+
+<form asp-action="Create" method="post">
+
+    <label>Име на училището:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <br />
+    <br />
+
+    <label>Адрес:</label>
+    <input asp-for="SchoolAddress" />
+    <span asp-validation-for="SchoolAddress"></span>
+
+    <button type="submit">Запази</button>
+
+</form>
+<a asp-action="Index">Назад към списъка</a>

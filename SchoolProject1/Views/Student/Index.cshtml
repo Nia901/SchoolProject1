@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SchoolProject1.ViewModels.Student.StudentIndexViewModel>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a asp-action="Create">Create New Student</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => student.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.SchoolName)
+                </td>
+                <td>
+                    <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id">Edit</a> |
+                    <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id">Details</a> |
+                    <a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<br/>
+<a asp-controller="School"
+   asp-action="Index">
+    View Schools
+</a>
