@@ -4,21 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SchoolProject1.Core.Interfaces;
+using SchoolProject1.Core.Services;
 using SchoolProject1.ViewModels.Student;
 
 namespace SchoolProject1.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly SchoolDbContext context;
+        private readonly IStudentService serviceStudent;
+        private readonly ITeacherService serviceTeacher;
 
-        public StudentController(SchoolDbContext context)
+        public StudentController(IStudentService serviceStudent, ITeacherService serviceTeacher)
         {
-            this.context = context;
+            this.serviceStudent = serviceStudent;
+            this.serviceTeacher = serviceTeacher;
         }
         public async Task<IActionResult> Index()
         {
-            List<Student> students1=await context.Students.Include(x=>x.School).ToListAsync(); 
+            List<Student> students1=await serviceStudent.GetAllStudentsAsync(); 
             List<StudentIndexViewModel> students = new List<StudentIndexViewModel>();
             foreach (var student in students1)
             {
@@ -26,21 +30,34 @@ namespace SchoolProject1.Controllers
                     Id = student.Id,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
-                Age = student.Age,
-                SchoolName=student.School.Name
+                Age = student.Age
                 };
                 students.Add(model);
             }
             return View(students);
         }
+        private async Task LoadTeachers(List<int> selectedTeachers = null)
+        {
+            var teacherQuery = await serviceTeacher.GetAllTeachersAsync();
+
+            var teachers = teacherQuery
+                .Select(d => new
+                {
+                    d.Id,
+                    FullName = d.FirstName + " " + d.LastName
+                })
+                .ToList();
+
+            ViewBag.Teachers = new MultiSelectList(
+                teachers,
+                "Id",
+                "FullName",
+                selectedTeachers
+            );
+        }
         public async Task<IActionResult> Create()
         {
-            ViewBag.Schools = new SelectList(
-            await context.Schools
-         .Where(h => !h.IsDeleted)
-         .ToListAsync(),
-             "Id",
-            "Name");
+            await LoadTeachers();
             return View();
         }
         [HttpPost]
@@ -55,27 +72,27 @@ namespace SchoolProject1.Controllers
                     Age = model.Age,
                     Address = model.Address,
                     Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    SchoolId=model.SchoolId
+                    PhoneNumber = model.PhoneNumber
                 };
-                School school=await context.Schools.FindAsync(model.SchoolId);
-                
-                context.Students.Add(s);
-                school.StudentsCount++;
-                await context.SaveChangesAsync();
+                Teacher t = await serviceTeacher.GetTeacherByIdAsync(model.TeacherIds.First());
+                int schoolId = t.SchoolId;
+                foreach (var teacherId in model.TeacherIds)//direktno 
+                {
+                    s.StudentTeacher.Add(new StudentTeacher
+                    {
+                        
+                        TeacherId=teacherId
+                    });
+                }
+                await serviceStudent.AddStudentAsync(s,schoolId);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Schools = new SelectList(
-                await context.Schools
-                    .Where(h => !h.IsDeleted)
-                    .ToListAsync(),
-                "Id",
-                "Name");
+            await LoadTeachers();
             return View(model);
         }
         public async Task<IActionResult>Edit(int id)
         {
-            Student st = await context.Students.FindAsync(id);
+            Student st = await serviceStudent.GetStudentByIdAsync(id);
             if (st == null)
                 return NotFound();
             StudentEditViewModel model=new StudentEditViewModel { 
@@ -85,15 +102,15 @@ namespace SchoolProject1.Controllers
             Age= st.Age,
             Address = st.Address,
             Email = st.Email,
-            PhoneNumber = st.PhoneNumber,
-            SchoolId = st.SchoolId
+            PhoneNumber = st.PhoneNumber
             };
-            ViewBag.Schools = new SelectList(
-                    await context.Schools
-                        .Where(h => !h.IsDeleted)
-                        .ToListAsync(),
-                    "Id",
-                    "Name");
+
+            var selectedTeachers = st.StudentTeacher
+    .Select(x => x.TeacherId)
+    .ToList();
+
+            await LoadTeachers(selectedTeachers);
+
             return View(model);
         }
         [HttpPost]
@@ -105,7 +122,7 @@ namespace SchoolProject1.Controllers
             }
             if(ModelState.IsValid)
             {
-                Student st=await context.Students.FindAsync(id);
+                Student st=await serviceStudent.GetStudentByIdAsync(model.Id);
                if(st==null)
                     return NotFound();
                st.FirstName = model.FirstName;
@@ -114,21 +131,24 @@ namespace SchoolProject1.Controllers
                 st.Address = model.Address;
                     st.Email = model.Email;
                 st.PhoneNumber = model.PhoneNumber;
-                st.SchoolId = model.SchoolId;
-                await context.SaveChangesAsync();
+                st.StudentTeacher.Clear();
+                foreach (var teacherId in model.TeacherIds)//direktno 
+                {
+                    st.StudentTeacher.Add(new StudentTeacher
+                    {
+
+                        TeacherId = teacherId
+                    });
+                }
+                await serviceStudent.UpdateStudentAsync(st);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Schools = new SelectList(
-                 await context.Schools
-                     .Where(h => !h.IsDeleted)
-                     .ToListAsync(),
-                 "Id",
-                 "Name");
-            return RedirectToAction(nameof(Index));
+            await LoadTeachers(model.TeacherIds);
+            return View(model);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            Student st = await context.Students.FindAsync(id);
+            Student st = await serviceStudent.GetStudentByIdAsync(id);
             if (st == null)
             {
                 return NotFound();
@@ -146,20 +166,18 @@ namespace SchoolProject1.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult>DeleteConfirmed(StudentDeleteViewModel model)
         {
-            Student st = await context.Students.FindAsync(model.Id);
+            Student st = await serviceStudent.GetStudentByIdAsync(model.Id);
             if(st == null)
             {
                 return NotFound();
             }
-            School school = await context.Schools.FindAsync(st.SchoolId);
-            context.Students.Remove(st);
-            school.StudentsCount--;
-            await context.SaveChangesAsync();
+            int schoolId = st.StudentTeacher.First().Teacher.SchoolId;
+            await serviceStudent.DeleteStudentAsync(st.Id, schoolId);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult>Details(int id)
         {
-            Student st = await context.Students.FindAsync(id);
+            Student st = await serviceStudent.GetStudentByIdAsync(id);
             if (st == null)
             {
                 return NotFound();
@@ -172,7 +190,8 @@ namespace SchoolProject1.Controllers
                 Age=st.Age,
                 Address=st.Address,
                 Email=st.Email,
-                PhoneNumber=st.PhoneNumber
+                PhoneNumber=st.PhoneNumber,
+                TeacherName=string.Join(",",st.StudentTeacher.Select(t=>t.Teacher.FirstName+" "+t.Teacher.LastName))
             };
             return View(model);
         }

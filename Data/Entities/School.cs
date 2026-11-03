@@ -19,8 +19,15 @@ namespace Data.Entities
         public string SchoolAddress { get; set; }
         [Range(1, int.MaxValue)]
         public int StudentsCount { get; set; }
+        [EmailAddress]
+        [Required]
+        public string Email { get; set; }
+        [Phone]
+        [Required]
+        public string PhoneNumber { get; set; }
+        [Range(1, int.MaxValue)]
+        public  int RoomsCount { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<Student> Students { get; set; } = new List<Student>();
     }
 }

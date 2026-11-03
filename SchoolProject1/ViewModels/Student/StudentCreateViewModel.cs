@@ -21,6 +21,7 @@ namespace SchoolProject1.ViewModels.Student
         [Required(ErrorMessage ="Phone number is required.")]
         [Phone(ErrorMessage ="Invalid phone number.")]
         public string PhoneNumber { get; set; }
-        public int SchoolId { get; set; }
+        [Required(ErrorMessage = "Please choose at least one teacher.")]
+        public List<int> TeacherIds { get; set; }
     }
 }

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SchoolProject1.ViewModels.Teacher.TeacherIndexViewModel>
+
+@{
+    ViewData["Title"] = "Учители";
+}
+
+<h1>Списък с учители</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Добави нов учител
+    </a>
+</p>
+
+<table class="table table-striped table-bordered">
+
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Име</th>
+            <th>Фамилия</th>
+            <th>Възраст</th>
+            <th>Адрес</th>
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Училище</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var teacher in Model)
+        {
+            <tr>
+                <td>@teacher.Id</td>
+                <td>@teacher.FirstName</td>
+                <td>@teacher.LastName</td>
+                <td>@teacher.Age</td>
+                <td>@teacher.Address</td>
+                <td>@teacher.Email</td>
+                <td>@teacher.PhoneNumber</td>
+                <td>@teacher.SchoolName</td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@teacher.Id"
+                       class="btn btn-warning btn-sm">
+                        Редактирай
+                    </a>
+
+                    <a asp-action="Details"
+                       asp-route-id="@teacher.Id"
+                       class="btn btn-info btn-sm">
+                        Детайли
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@teacher.Id"
+                       class="btn btn-danger btn-sm">
+                        Изтрий
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<br />
+
+<a asp-controller="School" asp-action="Index" class="btn btn-secondary">
+    Виж училищата
+</a>
+
+<a asp-controller="Student" asp-action="Index" class="btn btn-secondary">
+    Виж учениците
+</a>

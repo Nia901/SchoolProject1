@@ -1,47 +1,69 @@
 ﻿@model SchoolProject1.ViewModels.School.SchoolDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детайли за училище";
 }
 
-<h1>Details</h1>
+<h1>Детайли за училище</h1>
 
 <div>
-    <h4>School</h4>
     <hr />
 
     <dl class="row">
-        <dt>
+
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt>
+
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.SchoolAddress)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.SchoolAddress)
         </dd>
 
-        <dt>
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.StudentsCount)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.StudentsCount)
         </dd>
 
-        <dt>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.RoomsCount)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.RoomsCount)
+        </dd>
+
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
 
@@ -49,7 +71,10 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <a asp-action="Edit" asp-route-id="@Model.Id"
+       class="btn btn-primary">Редактирай</a>
 
+    <a asp-action="Index" class="btn btn-secondary">
+        Назад към списъка
+    </a>
+</div>

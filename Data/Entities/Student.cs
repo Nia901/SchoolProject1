@@ -28,7 +28,6 @@ namespace Data.Entities
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
-        public int SchoolId { get; set; }
-        public School School { get; set; }
+        public ICollection<StudentTeacher> StudentTeacher { get; set; } = new List<StudentTeacher>();
     }
 }

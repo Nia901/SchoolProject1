@@ -1,21 +1,51 @@
 ﻿@model SchoolProject1.ViewModels.School.SchoolCreateViewModel
 
+@{
+    ViewData["Title"] = "Добавяне на училище";
+}
+
 <h1>Добавяне на училище</h1>
 
 <form asp-action="Create" method="post">
 
-    <label>Име на училището:</label>
-    <input asp-for="Name" />
-    <span asp-validation-for="Name"></span>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Име на училището:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
 
-    <br />
-    <br />
+    <div class="mb-3">
+        <label asp-for="SchoolAddress" class="form-label">Адрес:</label>
+        <input asp-for="SchoolAddress" class="form-control" />
+        <span asp-validation-for="SchoolAddress" class="text-danger"></span>
+    </div>
 
-    <label>Адрес:</label>
-    <input asp-for="SchoolAddress" />
-    <span asp-validation-for="SchoolAddress"></span>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Имейл:</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
 
-    <button type="submit">Запази</button>
+    <div class="mb-3">
+        <label asp-for="PhoneNumber" class="form-label">Телефон:</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="RoomsCount" class="form-label">Брой стаи:</label>
+        <input asp-for="RoomsCount" class="form-control" />
+        <span asp-validation-for="RoomsCount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Запази</button>
+
+    <a asp-action="Index" class="btn btn-secondary">Назад към списъка</a>
 
 </form>
-<a asp-action="Index">Назад към списъка</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

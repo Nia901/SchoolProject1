@@ -1,5 +1,7 @@
 using Data;
 using Microsoft.EntityFrameworkCore;
+using SchoolProject1.Core.Interfaces;
+using SchoolProject1.Core.Services;
 
 namespace SchoolProject1
 {
@@ -14,7 +16,9 @@ namespace SchoolProject1
 
             builder.Services.AddDbContext<SchoolDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
                 );
-
+            builder.Services.AddScoped<ISchoolService, SchoolService>();
+            builder.Services.AddScoped<ITeacherService, TeacherService>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

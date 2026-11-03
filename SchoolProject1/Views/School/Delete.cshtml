@@ -1,36 +1,45 @@
 ﻿@model SchoolProject1.ViewModels.School.SchoolDeleteViewModel
 
+@{
+    ViewData["Title"] = "Изтриване на училище";
+}
+
 <h1>Изтриване на училище</h1>
 
-<h3>Сигурни ли сте, че искате да изтриете това училище?</h3>
+<h4>Сигурни ли сте, че искате да изтриете това училище?</h4>
 
-<div>
+<hr />
 
-    <hr />
+<div class="mb-3">
+    <dl class="row">
 
-    <dl>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
 
-        <dt>
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-
-
     </dl>
-
-    <form asp-action="Delete" method="post">
-
-        <input asp-for="Id" type="hidden" />
-
-        <input type="submit" value="Delete" />
-
-        |
-
-        <a asp-action="Index">Back to List</a>
-
-    </form>
-
 </div>
+
+<form asp-action="Delete" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit" class="btn btn-danger">
+        Изтрий
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Отказ
+    </a>
+
+</form>

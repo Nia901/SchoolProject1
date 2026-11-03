@@ -2,21 +2,22 @@
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolProject1.Core.Interfaces;
 using SchoolProject1.ViewModels.School;
 
 namespace SchoolProject1.Controllers
 {
     public class SchoolController : Controller
     {
-        private readonly SchoolDbContext context;
+        private readonly ISchoolService service;
 
-        public SchoolController(SchoolDbContext context)
+        public SchoolController(ISchoolService service)
         {
-            this.context = context;
+            this.service = service;
         }
         public async Task<IActionResult> Index()
         {
-            List<School> schools=await context.Schools.Where(x=>!x.IsDeleted).ToListAsync();
+            List<School> schools = await service.GetAllSchoolsAsync();
             var model=new List<SchoolIndexViewModel>();
             foreach (var school in schools)
             {
@@ -24,7 +25,11 @@ namespace SchoolProject1.Controllers
                 {
                     Id = school.Id,
                     Name = school.Name,
-                    SchoolAddress=school.SchoolAddress
+                    SchoolAddress=school.SchoolAddress,
+                    StudentsCount=school.StudentsCount,
+                    Email=school.Email,
+                    PhoneNumber=school.PhoneNumber,
+                    RoomsCount=school.RoomsCount
                 };
                 model.Add(modelItem);
             }
@@ -32,7 +37,7 @@ namespace SchoolProject1.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            School school=await context.Schools.FindAsync(id);
+            School school=await service.GetSchoolByIdAsync(id);
             if(school == null)
             {
                 return NotFound();
@@ -43,7 +48,10 @@ namespace SchoolProject1.Controllers
                 Name=school.Name,
                 SchoolAddress = school.SchoolAddress,
                 StudentsCount=school.StudentsCount,
-                CreatedOn=DateTime.Now
+                Email=school.Email,
+                PhoneNumber=school.PhoneNumber,
+                RoomsCount=school.RoomsCount,
+                CreatedOn=school.CreatedOn
             };
             return View(model);
         }
@@ -60,18 +68,20 @@ namespace SchoolProject1.Controllers
                 Name = model.Name,
                 SchoolAddress = model.SchoolAddress,
                 StudentsCount=0,
+                Email=model.Email,
+                PhoneNumber=model.PhoneNumber,
+                RoomsCount=model.RoomsCount,
                 CreatedOn=DateTime.Now,
                 IsDeleted=false
                 };
-                context.Schools.Add(school);
-                await context.SaveChangesAsync();
+                await service.AddSchoolAsync(school);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
         public async Task<IActionResult> Edit(int id)
         {
-            School school = await context.Schools.FindAsync(id);
+            School school = await service.GetSchoolByIdAsync(id);
             if(school == null)
             {
                 return NotFound();
@@ -79,7 +89,10 @@ namespace SchoolProject1.Controllers
             SchoolEditViewModel model=new SchoolEditViewModel { 
             Id = id,
             Name = school.Name,
-            SchoolAddress=school.SchoolAddress
+            SchoolAddress=school.SchoolAddress,
+            Email=school.Email,
+            PhoneNumber=school.PhoneNumber,
+            RoomsCount=school.RoomsCount
             };
             return View(model);
         }
@@ -92,21 +105,24 @@ namespace SchoolProject1.Controllers
             }
             if(ModelState.IsValid)
             {
-                School school = await context.Schools.FindAsync(id);
+                School school = await service.GetSchoolByIdAsync(id);
                 if (school == null)
                 {
                     return NotFound();
                 }
                 school.Name = model.Name;
                 school.SchoolAddress = model.SchoolAddress;
-                await context.SaveChangesAsync();
+                school.Email = model.Email;
+                school.PhoneNumber = model.PhoneNumber;
+                school.RoomsCount = model.RoomsCount;
+                await service.UpdateSchoolAsync(school);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            School school = await context.Schools.FindAsync(id);
+            School school = await service.GetSchoolByIdAsync(id);
             if(school == null)
             {
                 return NotFound();
@@ -122,11 +138,10 @@ namespace SchoolProject1.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(SchoolDeleteViewModel school)
         {
-            School school1 = await context.Schools.FindAsync(school.Id);
+            School school1 = await service.GetSchoolByIdAsync(school.Id);
             if(school1 == null)
                 { return NotFound(); }
-            school1.IsDeleted = true;
-            await context.SaveChangesAsync();
+            await service.DeleteSchoolAsync(school.Id);
             return RedirectToAction(nameof(Index));
         }
     }
