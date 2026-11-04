@@ -36,7 +36,7 @@ namespace SchoolProject1.Controllers
             }
             return View(students);
         }
-        private async Task LoadTeachers(List<int> selectedTeachers = null)
+        private async Task LoadTeachers(List<int> selectedTeachers = null,Student s=null)
         {
             var teacherQuery = await serviceTeacher.GetAllTeachersAsync();
 
@@ -54,6 +54,7 @@ namespace SchoolProject1.Controllers
                 "FullName",
                 selectedTeachers
             );
+
         }
         public async Task<IActionResult> Create()
         {

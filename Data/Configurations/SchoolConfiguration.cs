@@ -19,8 +19,8 @@ namespace Data.Configurations
                 {
                     Id = 1,
                     Name="OU \"Georgi Kirkov\"",
-                    SchoolAddress = "Kazanlak, Bulgaria",
-                    StudentsCount = 0,
+                    SchoolAddress = "Kazanlak",
+                    StudentsCount = 1,
                     Email="georgikirkovschool1@abv.bg",
                     PhoneNumber = "0888 123 456",
                     RoomsCount = 10,
@@ -31,7 +31,7 @@ namespace Data.Configurations
                 {
                     Id = 2,
                     Name = "PPMG \"Nikola Obreshkov\"",
-                    SchoolAddress = "Kazanlak, Bulgaria",
+                    SchoolAddress = "Kazanlak",
                     StudentsCount = 0,
                     Email = "nikolaobreshkovschool1@abv.bg",
                     PhoneNumber = "0888 123 459",
@@ -43,8 +43,8 @@ namespace Data.Configurations
                  {
                      Id = 3,
                      Name = "SU \"Kiril i Metodii\"",
-                     SchoolAddress = "Sofia, Bulgaria",
-                     StudentsCount = 0,
+                     SchoolAddress = "Sofia",
+                     StudentsCount = 2,
                      Email = "kirilimetodiischool1@abv.bg",
                      PhoneNumber = "0888 123 459",
                      RoomsCount = 8,

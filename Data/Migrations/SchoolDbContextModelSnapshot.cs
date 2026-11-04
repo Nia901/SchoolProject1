@@ -68,38 +68,38 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8282),
+                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3111),
                             Email = "georgikirkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "OU \"Georgi Kirkov\"",
                             PhoneNumber = "0888 123 456",
                             RoomsCount = 10,
-                            SchoolAddress = "Kazanlak, Bulgaria",
-                            StudentsCount = 0
+                            SchoolAddress = "Kazanlak",
+                            StudentsCount = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8323),
+                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3158),
                             Email = "nikolaobreshkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "PPMG \"Nikola Obreshkov\"",
                             PhoneNumber = "0888 123 459",
                             RoomsCount = 15,
-                            SchoolAddress = "Kazanlak, Bulgaria",
+                            SchoolAddress = "Kazanlak",
                             StudentsCount = 0
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8325),
+                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3161),
                             Email = "kirilimetodiischool1@abv.bg",
                             IsDeleted = false,
                             Name = "SU \"Kiril i Metodii\"",
                             PhoneNumber = "0888 123 459",
                             RoomsCount = 8,
-                            SchoolAddress = "Sofia, Bulgaria",
-                            StudentsCount = 0
+                            SchoolAddress = "Sofia",
+                            StudentsCount = 2
                         });
                 });
 
@@ -145,7 +145,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Kazanlak, Bulgaria",
+                            Address = "Kazanlak",
                             Age = 18,
                             Email = "ivanivanov1@abv.bg",
                             FirstName = "Ivan",
@@ -155,7 +155,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "Kazanlak, Bulgaria",
+                            Address = "Kazanlak",
                             Age = 15,
                             Email = "petarpetrov1@abv.bg",
                             FirstName = "Petar",
@@ -165,7 +165,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            Address = "Sofia, Bulgaria",
+                            Address = "Sofia",
                             Age = 14,
                             Email = "dariyaivanova1@abv.bg",
                             FirstName = "Dariya",
@@ -256,7 +256,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Kazanlak, Bulgaria",
+                            Address = "Kazanlak",
                             Age = 30,
                             Email = "teodorakoleva1@abv.bg",
                             FirstName = "Teodora",
@@ -268,7 +268,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "Kazanlak, Bulgaria",
+                            Address = "Kazanlak",
                             Age = 50,
                             Email = "svetlananenkova1@abv.bg",
                             FirstName = "Svetlana",
@@ -280,7 +280,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            Address = "Sofia, Bulgaria",
+                            Address = "Sofia",
                             Age = 35,
                             Email = "kamenkolev1@abv.bg",
                             FirstName = "Kamen",

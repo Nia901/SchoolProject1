@@ -21,7 +21,7 @@ namespace Data.Configurations
                     LastName = "Koleva",
                     Age = 30,
                     YearsOfExperience=3,
-                    Address = "Kazanlak, Bulgaria",
+                    Address = "Kazanlak",
                     Email = "teodorakoleva1@abv.bg",
                     PhoneNumber = "0888 123 876",
                     SchoolId = 1
@@ -33,7 +33,7 @@ namespace Data.Configurations
                   LastName = "Nenkova",
                   Age = 50,
                   YearsOfExperience = 10,
-                  Address = "Kazanlak, Bulgaria",
+                  Address = "Kazanlak",
                   Email = "svetlananenkova1@abv.bg",
                   PhoneNumber = "0888 123 876",
                   SchoolId = 2
@@ -45,7 +45,7 @@ namespace Data.Configurations
                     LastName = "Kolev",
                     Age = 35,
                     YearsOfExperience = 12,
-                    Address = "Sofia, Bulgaria",
+                    Address = "Sofia",
                     Email = "kamenkolev1@abv.bg",
                     PhoneNumber = "0888 123 333",
                     SchoolId = 3

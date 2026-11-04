@@ -18,7 +18,7 @@ namespace SchoolProject1.Controllers
             this.serviceSchool = serviceSchool;
             this.serviceTeacher = serviceTeacher;
         }
-        private async Task LoadSchools()
+        private async Task LoadSchools(Teacher t=null)
         {
             var schools = await serviceSchool.GetAllSchoolsAsync();
 
@@ -27,6 +27,7 @@ namespace SchoolProject1.Controllers
                 "Id",
                 "Name"
             );
+
         }
         public async Task<IActionResult> Index()
         {

@@ -11,7 +11,6 @@ namespace Data.Configurations
 {
     public class StudentConfiguration:IEntityTypeConfiguration<Student>
     {
-        //problema s uchitelite v nachaloto i problema s adresite
         public void Configure(EntityTypeBuilder<Student> builder)
         {
             builder.HasData(
@@ -21,7 +20,7 @@ namespace Data.Configurations
                     FirstName= "Ivan",
                     LastName = "Ivanov",
                     Age=18,
-                    Address = "Kazanlak, Bulgaria",
+                    Address = "Kazanlak",
                     Email="ivanivanov1@abv.bg",
                     PhoneNumber = "0888 123 456"
                 },
@@ -31,7 +30,7 @@ namespace Data.Configurations
                    FirstName = "Petar",
                    LastName = "Petrov",
                    Age = 15,
-                   Address = "Kazanlak, Bulgaria",
+                   Address = "Kazanlak",
                    Email = "petarpetrov1@abv.bg",
                    PhoneNumber = "0888 123 450"
                },
@@ -41,7 +40,7 @@ namespace Data.Configurations
                      FirstName = "Dariya",
                      LastName = "Ivanova",
                      Age = 14,
-                     Address = "Sofia, Bulgaria",
+                     Address = "Sofia",
                      Email = "dariyaivanova1@abv.bg",
                      PhoneNumber = "0888 123 468"
                  }
