@@ -26,6 +26,7 @@ namespace SchoolProject1.Core.Services
         {
             return await context.Students
     .Include(s => s.StudentTeacher)
+    .ThenInclude(t=>t.Teacher)
     .FirstOrDefaultAsync(s => s.Id == id);
         }
         public async Task AddStudentAsync(Student student,int schoolId)
@@ -48,7 +49,7 @@ namespace SchoolProject1.Core.Services
             Student student = await context.Students.FindAsync(id);
             if (student != null&&school!=null)
             {
-                school.StudentsCount --;
+                school.StudentsCount--;
                 context.Students.Remove(student);
                 await context.SaveChangesAsync();
             }

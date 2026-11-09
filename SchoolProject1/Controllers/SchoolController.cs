@@ -15,9 +15,9 @@ namespace SchoolProject1.Controllers
         {
             this.service = service;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int? minStudents, string? sortOrder)
         {
-            List<School> schools = await service.GetAllSchoolsAsync();
+            List<School> schools = await service.GetAllSchoolsAsync(search,minStudents,sortOrder);
             var model=new List<SchoolIndexViewModel>();
             foreach (var school in schools)
             {
@@ -33,6 +33,9 @@ namespace SchoolProject1.Controllers
                 };
                 model.Add(modelItem);
             }
+            ViewBag.Search = search;
+            ViewBag.MinStudents = minStudents;
+            ViewBag.SortOrder = sortOrder;
             return View(model);
         }
         public async Task<IActionResult> Details(int id)

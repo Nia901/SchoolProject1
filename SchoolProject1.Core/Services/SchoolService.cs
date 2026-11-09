@@ -17,9 +17,35 @@ namespace SchoolProject1.Core.Services
         {
             this.context = context;
         }
-        public async Task<List<School>> GetAllSchoolsAsync()
+        public async Task<List<School>> GetAllSchoolsAsync(string? search = null, int? minStudents = null, string? sortOrder = null)
         {
-            return await context.Schools.Where(s=>!s.IsDeleted).ToListAsync();
+            var query = context.Schools.Where(h => !h.IsDeleted);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(h => h.Name.Contains(search));
+            }
+
+            if (minStudents.HasValue)
+            {
+                query = query.Where(h => h.StudentsCount >= minStudents.Value);
+            }
+            switch (sortOrder)
+            {
+                case "name":
+                    query = query.OrderBy(h => h.Name);
+                    break;
+                case "students_desc":
+                    query = query.OrderByDescending(h => h.StudentsCount);
+                    break;
+                case "students_asc":
+                    query = query.OrderBy(h => h.StudentsCount);
+                    break;
+                default:
+                    query = query.OrderBy(h => h.Name);
+                    break;
+            }
+            return await query.ToListAsync();
         }
         public async Task<School>? GetSchoolByIdAsync(int id)
         {
