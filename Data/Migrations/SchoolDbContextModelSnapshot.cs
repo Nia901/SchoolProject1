@@ -68,7 +68,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3111),
+                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5045),
                             Email = "georgikirkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "OU \"Georgi Kirkov\"",
@@ -80,7 +80,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3158),
+                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5086),
                             Email = "nikolaobreshkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "PPMG \"Nikola Obreshkov\"",
@@ -92,7 +92,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 11, 4, 8, 41, 46, 199, DateTimeKind.Local).AddTicks(3161),
+                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5088),
                             Email = "kirilimetodiischool1@abv.bg",
                             IsDeleted = false,
                             Name = "SU \"Kiril i Metodii\"",
@@ -243,6 +243,11 @@ namespace Data.Migrations
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("YearsOfExperience")
                         .HasColumnType("int");
 
@@ -263,6 +268,7 @@ namespace Data.Migrations
                             LastName = "Koleva",
                             PhoneNumber = "0888 123 876",
                             SchoolId = 1,
+                            Subject = "chemistry",
                             YearsOfExperience = 3
                         },
                         new
@@ -275,6 +281,7 @@ namespace Data.Migrations
                             LastName = "Nenkova",
                             PhoneNumber = "0888 123 876",
                             SchoolId = 2,
+                            Subject = "maths",
                             YearsOfExperience = 10
                         },
                         new
@@ -287,6 +294,7 @@ namespace Data.Migrations
                             LastName = "Kolev",
                             PhoneNumber = "0888 123 333",
                             SchoolId = 3,
+                            Subject = "physics",
                             YearsOfExperience = 12
                         });
                 });

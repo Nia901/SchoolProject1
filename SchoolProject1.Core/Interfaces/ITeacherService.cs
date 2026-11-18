@@ -9,7 +9,7 @@ namespace SchoolProject1.Core.Interfaces
 {
     public interface ITeacherService
     {
-        public Task<List<Teacher>> GetAllTeachersAsync();
+        public Task<List<Teacher>> GetAllTeachersAsync(string?search=null,string?subject=null,string?sortOrder=null);
         public Task<Teacher>? GetTeacherByIdAsync(int id);
         public Task AddTeacherAsync(Teacher teacher);
         public Task UpdateTeacherAsync(Teacher teacher);

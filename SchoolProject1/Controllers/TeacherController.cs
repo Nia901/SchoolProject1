@@ -29,6 +29,25 @@ namespace SchoolProject1.Controllers
             );
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetFilterTeachers(string? name, string? subject, string? sortOrder)
+        {
+            var teachers = await serviceTeacher.GetAllTeachersAsync(name,subject, sortOrder);
+
+            var result = teachers.Select(d => new
+            {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Age = d.Age,
+                Email = d.Email,
+                Subject = d.Subject,
+                PhoneNumber = d.PhoneNumber,
+                Address = d.Address,
+                SchoolName = d.School.Name
+            }).ToList();
+            return Json(result);
+        }
         public async Task<IActionResult> Index()
         {
             List<Teacher> teachers =await serviceTeacher.GetAllTeachersAsync();
@@ -42,7 +61,8 @@ namespace SchoolProject1.Controllers
                     LastName = teacher.LastName,
                     Age = teacher.Age,
                     Email=teacher.Email,
-                    PhoneNumber=teacher.PhoneNumber,
+                    Subject = teacher.Subject,
+                    PhoneNumber =teacher.PhoneNumber,
                     Address=teacher.Address,
                     SchoolName=teacher.School.Name
                 };
@@ -70,6 +90,7 @@ namespace SchoolProject1.Controllers
                     Address = model.Address,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
+                    Subject=model.Subject,
                     YearsOfExperience = model.YearsOfExperience,
                     SchoolId = model.SchoolId
                 };
@@ -96,7 +117,8 @@ namespace SchoolProject1.Controllers
                 Address=t.Address,
                 Email=t.Email,
                 PhoneNumber=t.PhoneNumber,
-                YearsOfExperience=t.YearsOfExperience,
+                Subject = t.Subject,
+                YearsOfExperience =t.YearsOfExperience,
                 SchoolId=t.SchoolId
             };
             await LoadSchools();
@@ -121,6 +143,7 @@ namespace SchoolProject1.Controllers
                 t.Address = model.Address;
                 t.Email = model.Email;
                 t.PhoneNumber = model.PhoneNumber;
+                t.Subject = model.Subject;
                 t.SchoolId = model.SchoolId;
                 await serviceTeacher.UpdateTeacherAsync(t);
                 return RedirectToAction(nameof(Index));
@@ -172,6 +195,7 @@ namespace SchoolProject1.Controllers
                 YearsOfExperience=t.YearsOfExperience,
                 Address = t.Address,
                 Email = t.Email,
+                Subject = t.Subject,
                 PhoneNumber = t.PhoneNumber,
                 Students = string.Join(", ",
     t.StudentTeacher.Select(x =>

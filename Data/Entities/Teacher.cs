@@ -26,6 +26,9 @@ namespace Data.Entities
         [Phone]
         [Required]
         public string PhoneNumber { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Subject { get; set; }
         [Required, StringLength(100)]
         public string Address { get; set; }
         public int SchoolId { get; set; }

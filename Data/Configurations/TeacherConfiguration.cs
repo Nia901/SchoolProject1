@@ -24,6 +24,7 @@ namespace Data.Configurations
                     Address = "Kazanlak",
                     Email = "teodorakoleva1@abv.bg",
                     PhoneNumber = "0888 123 876",
+                    Subject = "chemistry",
                     SchoolId = 1
                 },
               new Teacher
@@ -36,6 +37,7 @@ namespace Data.Configurations
                   Address = "Kazanlak",
                   Email = "svetlananenkova1@abv.bg",
                   PhoneNumber = "0888 123 876",
+                  Subject = "maths",
                   SchoolId = 2
               },
                 new Teacher
@@ -48,6 +50,7 @@ namespace Data.Configurations
                     Address = "Sofia",
                     Email = "kamenkolev1@abv.bg",
                     PhoneNumber = "0888 123 333",
+                    Subject = "physics",
                     SchoolId = 3
                 }
             );

@@ -19,6 +19,9 @@ namespace SchoolProject1.ViewModels.Teacher
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Phone number is required.")]
+        [StringLength(50, ErrorMessage = "String length must be less than 50.")]
+        public string Subject { get; set; }
+        [Required(ErrorMessage = "Phone number is required.")]
         [Phone(ErrorMessage = "Invalid phone number.")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Years of experience is required.")]

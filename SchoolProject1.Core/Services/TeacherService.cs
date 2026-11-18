@@ -17,10 +17,52 @@ namespace SchoolProject1.Core.Services
         {
             this.context = context;
         }
-        public async Task<List<Teacher>> GetAllTeachersAsync()
+        public async Task<List<Teacher>> GetAllTeachersAsync(
+    string? name = null,
+    string? subject = null,
+    string? sortOrder = null)
         {
-            return await context.Teachers.Include(s => s.StudentTeacher)
-                .ThenInclude(st => st.Student).ToListAsync();
+            var query = context.Teachers
+                .Include(d => d.School)
+                .Include(d => d.StudentTeacher)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(d =>
+                    d.FirstName.Contains(name) ||
+                    d.LastName.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(subject))
+            {
+                query = query.Where(d => d.Subject.Contains(subject));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    query = query.OrderByDescending(d => d.FirstName)
+                        .ThenByDescending(d => d.LastName);
+                    break;
+
+                case "name_asc":
+                    query = query.OrderBy(d => d.FirstName)
+                        .ThenBy(d => d.LastName);
+                    break;
+
+                case "subject":
+                    query = query.OrderBy(d => d.Subject)
+                        .ThenBy(d => d.FirstName);
+                    break;
+
+                default:
+                    query = query.OrderBy(d => d.FirstName)
+                        .ThenBy(d => d.LastName);
+                    break;
+            }
+
+            return await query.ToListAsync();
         }
         public async Task<Teacher>? GetTeacherByIdAsync(int id)
         {
@@ -38,9 +80,30 @@ namespace SchoolProject1.Core.Services
         public async Task DeleteTeacherAsync(int id)
         {
             Teacher teacher = await context.Teachers.FindAsync(id);
+
             if (teacher != null)
             {
+                int schoolId = teacher.SchoolId;
+
+                var school = await context.Schools
+                    .FirstOrDefaultAsync(x => x.Id == schoolId);
+
+                var studentTeachers = context.StudentsTeachers.Include(s=>s.Student)
+                    .Where(x => x.TeacherId == teacher.Id)
+                    .ToList();
+
+
+                if (school != null)
+                {
+                    school.StudentsCount -= studentTeachers.Count;
+                }
+                context.Students.RemoveRange(studentTeachers.Select(t => t.Student));
+                context.StudentsTeachers.RemoveRange(studentTeachers);
+                
+
+
                 context.Teachers.Remove(teacher);
+
                 await context.SaveChangesAsync();
             }
         }
