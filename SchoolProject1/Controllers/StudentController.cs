@@ -75,28 +75,17 @@ namespace SchoolProject1.Controllers
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber
                 };
-                bool p = true;
-                foreach (var item in model.TeacherIds)
+                foreach (var teacherId in model.TeacherIds)//direktno 
                 {
-                    Teacher teacher =await serviceTeacher.GetTeacherByIdAsync(item);
-                    if (!teacher.Address.ToLower().Contains(model.Address.ToLower()))
-                        p = false;
-                }
-                if (p)
-                {
-                    foreach (var teacherId in model.TeacherIds)//direktno 
+                    s.StudentTeacher.Add(new StudentTeacher
                     {
-                        s.StudentTeacher.Add(new StudentTeacher
-                        {
-
-                            TeacherId = teacherId
-                        });
-                    }
-                    Teacher t = await serviceTeacher.GetTeacherByIdAsync(model.TeacherIds.First());
-                    int schoolId = t.SchoolId;
-                    await serviceStudent.AddStudentAsync(s, schoolId);
+                        TeacherId = teacherId
+                    });
                 }
-                
+                Teacher t = await serviceTeacher.GetTeacherByIdAsync(model.TeacherIds.First());
+                int schoolId = t.SchoolId;
+                await serviceStudent.AddStudentAsync(s, schoolId);
+
                 return RedirectToAction(nameof(Index));
             }
             await LoadTeachers();
@@ -132,11 +121,17 @@ namespace SchoolProject1.Controllers
             {
                 return NotFound();
             }
+            if (model.TeacherIds.Count == 0)
+                return NotFound();
+            int oldTeach = -1;
             if(ModelState.IsValid)
             {
                 Student st=await serviceStudent.GetStudentByIdAsync(model.Id);
                if(st==null)
                     return NotFound();
+                StudentTeacher stt = st.StudentTeacher.FirstOrDefault(t => t.StudentId == st.Id);
+                if(stt!=null)
+                oldTeach = stt.TeacherId;
                st.FirstName = model.FirstName;
                 st.LastName = model.LastName;
                 st.Age = model.Age;
@@ -144,27 +139,28 @@ namespace SchoolProject1.Controllers
                     st.Email = model.Email;
                 st.PhoneNumber = model.PhoneNumber;
                 st.StudentTeacher.Clear();
-                bool p = true;
-                foreach (var item in model.TeacherIds)
+                bool t = false;
+                int teacherId1 = -1;
+                string schoolName = (await serviceTeacher.GetTeacherByIdAsync(model.TeacherIds[0])).School.Name;
+                foreach (var teacherId in model.TeacherIds)//direktno 
                 {
-                    Teacher teacher = await serviceTeacher.GetTeacherByIdAsync(item);
-                    if (!teacher.Address.ToLower().Contains(model.Address.ToLower()))
-                        p = false;
-                }
-                if (p)
-                {
-                    foreach (var teacherId in model.TeacherIds)//direktno 
+                    if((await serviceTeacher.GetTeacherByIdAsync(teacherId)).School.Name != schoolName)
                     {
-                        st.StudentTeacher.Add(new StudentTeacher
-                        {
-
-                            TeacherId = teacherId
-                        });
+                        t = true;
+                        teacherId1 = -1;
+                        break;
                     }
-                    Teacher t = await serviceTeacher.GetTeacherByIdAsync(model.TeacherIds.First());
-                    int schoolId = t.SchoolId;
-                    await serviceStudent.UpdateStudentAsync(st);
+                    st.StudentTeacher.Add(new StudentTeacher
+                    {
+                        TeacherId = teacherId
+                    });
+                    teacherId1 = teacherId;
                 }
+                if (!t)
+                {
+                    await serviceStudent.UpdateStudentAsync(teacherId1, oldTeach);
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
             await LoadTeachers(model.TeacherIds);
@@ -195,7 +191,11 @@ namespace SchoolProject1.Controllers
             {
                 return NotFound();
             }
-            int schoolId = st.StudentTeacher.First().Teacher.SchoolId;
+            int? schoolId=null;
+            if (st.StudentTeacher.FirstOrDefault() != null)
+            {
+                schoolId = st.StudentTeacher.FirstOrDefault().Teacher.SchoolId;
+            }
             await serviceStudent.DeleteStudentAsync(st.Id, schoolId);
             return RedirectToAction(nameof(Index));
         }

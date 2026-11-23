@@ -66,7 +66,9 @@ namespace SchoolProject1.Core.Services
         }
         public async Task<Teacher>? GetTeacherByIdAsync(int id)
         {
-            return await context.Teachers.FindAsync(id);
+            return await context.Teachers.Include(t=>t.School)
+                .Include(x=>x.StudentTeacher)
+                .ThenInclude(o=>o.Student).FirstOrDefaultAsync(t=>t.Id==id);
         }
         public async Task AddTeacherAsync(Teacher teacher)
         {
@@ -91,17 +93,18 @@ namespace SchoolProject1.Core.Services
                 var studentTeachers = context.StudentsTeachers.Include(s=>s.Student)
                     .Where(x => x.TeacherId == teacher.Id)
                     .ToList();
-
-
-                if (school != null)
+                StudentTeacher stt = await context.StudentsTeachers.FirstOrDefaultAsync(x => x.TeacherId == id);
+                for (int i = 0; i < studentTeachers.Count; i++)
                 {
-                    school.StudentsCount -= studentTeachers.Count;
+                    if (studentTeachers[i].Student.StudentTeacher.Count == 1)
+                    {
+                        if (school != null)
+                        {
+                            studentTeachers[i].Student.StudentTeacher.Remove(stt);
+                        }
+                    }
                 }
-                context.Students.RemoveRange(studentTeachers.Select(t => t.Student));
-                context.StudentsTeachers.RemoveRange(studentTeachers);
                 
-
-
                 context.Teachers.Remove(teacher);
 
                 await context.SaveChangesAsync();

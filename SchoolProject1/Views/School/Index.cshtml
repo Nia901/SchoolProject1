@@ -5,7 +5,12 @@
 }
 
 <h1>Списък с училища</h1>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <p>
     <a asp-action="Create" class="btn btn-primary">
         Добави ново училище

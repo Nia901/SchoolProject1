@@ -39,13 +39,26 @@ namespace SchoolProject1.Core.Services
                 await context.SaveChangesAsync();
             }
         }
-        public async Task UpdateStudentAsync(Student student)
+        public async Task UpdateStudentAsync(int teacherId,int oldTeach)
         {
+            Teacher t = await context.Teachers.FirstOrDefaultAsync(t => t.Id == teacherId);
+            Teacher t2 = await context.Teachers.FirstOrDefaultAsync(t => t.Id == oldTeach);
+            School school = await context.Schools.FindAsync(t.SchoolId);
+            if (t2 != null)
+            {
+                School oldSchool = await context.Schools.FindAsync(t2.SchoolId);
+                oldSchool.StudentsCount--;
+            }
+            
+            school.StudentsCount++;
+            
             await context.SaveChangesAsync();
         }
-        public async Task DeleteStudentAsync(int id,int schoolId)
+        public async Task DeleteStudentAsync(int id,int? schoolId=null)
         {
-            School school = await context.Schools.FindAsync(schoolId);
+            School school=null;
+            if(schoolId!=null)
+            school = await context.Schools.FindAsync(schoolId);
             Student student = await context.Students.FindAsync(id);
             if (student != null&&school!=null)
             {

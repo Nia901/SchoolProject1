@@ -94,7 +94,6 @@ namespace SchoolProject1.Controllers
                     YearsOfExperience = model.YearsOfExperience,
                     SchoolId = model.SchoolId
                 };
-
                 await serviceTeacher.AddTeacherAsync(teacher);
 
                 return RedirectToAction(nameof(Index));

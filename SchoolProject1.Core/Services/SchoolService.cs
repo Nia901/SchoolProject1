@@ -63,11 +63,14 @@ namespace SchoolProject1.Core.Services
         public async Task DeleteSchoolAsync(int id)
         {
             School school = await context.Schools.FindAsync(id);
-            if (school != null)
+            if (school == null) return;
+            bool hasTeachers = await context.Teachers.AnyAsync(t => t.SchoolId == id);
+            if (hasTeachers)
             {
-                school.IsDeleted = true;
-                await context.SaveChangesAsync();
+                throw new InvalidOperationException("Uchilishteto ne moje da bude iztrito, zashtoto v nego ima uchiteli");
             }
+            school.IsDeleted = true;
+            await context.SaveChangesAsync();
         }
     }
 }

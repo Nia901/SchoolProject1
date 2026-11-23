@@ -141,11 +141,16 @@ namespace SchoolProject1.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(SchoolDeleteViewModel school)
         {
-            School school1 = await service.GetSchoolByIdAsync(school.Id);
-            if(school1 == null)
-                { return NotFound(); }
-            await service.DeleteSchoolAsync(school.Id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await service.DeleteSchoolAsync(school.Id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
