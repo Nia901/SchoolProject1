@@ -17,7 +17,7 @@ namespace Data.Entities
         [Required]
         [StringLength(100)]
         public string SchoolAddress { get; set; }
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int StudentsCount { get; set; }
         [EmailAddress]
         [Required]
@@ -29,5 +29,7 @@ namespace Data.Entities
         public  int RoomsCount { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool IsDeleted { get; set; }
+
+        public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
     }
 }

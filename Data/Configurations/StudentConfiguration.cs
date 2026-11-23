@@ -11,8 +11,15 @@ namespace Data.Configurations
 {
     public class StudentConfiguration:IEntityTypeConfiguration<Student>
     {
+       
         public void Configure(EntityTypeBuilder<Student> builder)
         {
+            builder.Property(st => st.FirstName).IsRequired().HasMaxLength(50);
+            builder.Property(st => st.LastName).IsRequired().HasMaxLength(50);
+            builder.Property(st => st.Age).IsRequired();
+            builder.Property(st => st.Address).IsRequired().HasMaxLength(100);
+            builder.Property(st => st.PhoneNumber).IsRequired();
+
             builder.HasData(
                 new Student
                 {

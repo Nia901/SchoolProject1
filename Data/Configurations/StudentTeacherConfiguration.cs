@@ -13,6 +13,16 @@ namespace Data.Configurations
     {
         public void Configure(EntityTypeBuilder<StudentTeacher> builder)
         {
+            builder.HasKey(dp => new { dp.StudentId, dp.TeacherId });
+            builder.HasOne(dp => dp.Teacher)
+                .WithMany(d => d.StudentTeacher)
+                .HasForeignKey(dp => dp.TeacherId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(dp => dp.Student)
+                .WithMany(d => d.StudentTeacher)
+                .HasForeignKey(dp => dp.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasData(
                  new StudentTeacher
                  {

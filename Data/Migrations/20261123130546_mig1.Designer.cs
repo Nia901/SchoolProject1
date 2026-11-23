@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20261118122553_n")]
-    partial class n
+    [Migration("20261123130546_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5045),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5715),
                             Email = "georgikirkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "OU \"Georgi Kirkov\"",
@@ -83,7 +83,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5086),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5773),
                             Email = "nikolaobreshkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "PPMG \"Nikola Obreshkov\"",
@@ -95,7 +95,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 11, 18, 14, 25, 53, 346, DateTimeKind.Local).AddTicks(5088),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5777),
                             Email = "kirilimetodiischool1@abv.bg",
                             IsDeleted = false,
                             Name = "SU \"Kiril i Metodii\"",
@@ -324,12 +324,17 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Teacher", b =>
                 {
                     b.HasOne("Data.Entities.School", "School")
-                        .WithMany()
+                        .WithMany("Teachers")
                         .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("School");
+                });
+
+            modelBuilder.Entity("Data.Entities.School", b =>
+                {
+                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("Data.Entities.Student", b =>

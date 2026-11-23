@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class migu : Migration
+    public partial class mig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +63,7 @@ namespace Data.Migrations
                     YearsOfExperience = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SchoolId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -74,7 +75,7 @@ namespace Data.Migrations
                         column: x => x.SchoolId,
                         principalTable: "Schools",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,9 +107,9 @@ namespace Data.Migrations
                 columns: new[] { "Id", "CreatedOn", "Email", "IsDeleted", "Name", "PhoneNumber", "RoomsCount", "SchoolAddress", "StudentsCount" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8282), "georgikirkovschool1@abv.bg", false, "OU \"Georgi Kirkov\"", "0888 123 456", 10, "Kazanlak, Bulgaria", 0 },
-                    { 2, new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8323), "nikolaobreshkovschool1@abv.bg", false, "PPMG \"Nikola Obreshkov\"", "0888 123 459", 15, "Kazanlak, Bulgaria", 0 },
-                    { 3, new DateTime(2026, 11, 3, 10, 26, 1, 432, DateTimeKind.Local).AddTicks(8325), "kirilimetodiischool1@abv.bg", false, "SU \"Kiril i Metodii\"", "0888 123 459", 8, "Sofia, Bulgaria", 0 }
+                    { 1, new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5715), "georgikirkovschool1@abv.bg", false, "OU \"Georgi Kirkov\"", "0888 123 456", 10, "Kazanlak", 1 },
+                    { 2, new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5773), "nikolaobreshkovschool1@abv.bg", false, "PPMG \"Nikola Obreshkov\"", "0888 123 459", 15, "Kazanlak", 0 },
+                    { 3, new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5777), "kirilimetodiischool1@abv.bg", false, "SU \"Kiril i Metodii\"", "0888 123 459", 8, "Sofia", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -116,19 +117,19 @@ namespace Data.Migrations
                 columns: new[] { "Id", "Address", "Age", "Email", "FirstName", "LastName", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { 1, "Kazanlak, Bulgaria", 18, "ivanivanov1@abv.bg", "Ivan", "Ivanov", "0888 123 456" },
-                    { 2, "Kazanlak, Bulgaria", 15, "petarpetrov1@abv.bg", "Petar", "Petrov", "0888 123 450" },
-                    { 3, "Sofia, Bulgaria", 14, "dariyaivanova1@abv.bg", "Dariya", "Ivanova", "0888 123 468" }
+                    { 1, "Kazanlak", 18, "ivanivanov1@abv.bg", "Ivan", "Ivanov", "0888 123 456" },
+                    { 2, "Kazanlak", 15, "petarpetrov1@abv.bg", "Petar", "Petrov", "0888 123 450" },
+                    { 3, "Sofia", 14, "dariyaivanova1@abv.bg", "Dariya", "Ivanova", "0888 123 468" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Teachers",
-                columns: new[] { "Id", "Address", "Age", "Email", "FirstName", "LastName", "PhoneNumber", "SchoolId", "YearsOfExperience" },
+                columns: new[] { "Id", "Address", "Age", "Email", "FirstName", "LastName", "PhoneNumber", "SchoolId", "Subject", "YearsOfExperience" },
                 values: new object[,]
                 {
-                    { 1, "Kazanlak, Bulgaria", 30, "teodorakoleva1@abv.bg", "Teodora", "Koleva", "0888 123 876", 1, 3 },
-                    { 2, "Kazanlak, Bulgaria", 50, "svetlananenkova1@abv.bg", "Svetlana", "Nenkova", "0888 123 876", 2, 10 },
-                    { 3, "Sofia, Bulgaria", 35, "kamenkolev1@abv.bg", "Kamen", "Kolev", "0888 123 333", 3, 12 }
+                    { 1, "Kazanlak", 30, "teodorakoleva1@abv.bg", "Teodora", "Koleva", "0888 123 876", 1, "chemistry", 3 },
+                    { 2, "Kazanlak", 50, "svetlananenkova1@abv.bg", "Svetlana", "Nenkova", "0888 123 876", 2, "maths", 10 },
+                    { 3, "Sofia", 35, "kamenkolev1@abv.bg", "Kamen", "Kolev", "0888 123 333", 3, "physics", 12 }
                 });
 
             migrationBuilder.InsertData(

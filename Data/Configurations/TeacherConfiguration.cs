@@ -13,6 +13,16 @@ namespace Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Teacher> builder)
         {
+            builder.Property(t => t.FirstName).IsRequired().HasMaxLength(50);
+            builder.Property(t => t.LastName).IsRequired().HasMaxLength(50);
+            builder.Property(t => t.Age).IsRequired();
+            builder.Property(t => t.YearsOfExperience).IsRequired();
+            builder.Property(t => t.Address).IsRequired().HasMaxLength(100);
+            builder.Property(t => t.Email).IsRequired();
+            builder.Property(t => t.PhoneNumber).IsRequired();
+            builder.Property(t => t.Subject).IsRequired().HasMaxLength(50);
+            builder.HasOne(t => t.School).WithMany(t => t.Teachers).HasForeignKey(t => t.SchoolId).OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(
                 new Teacher
                 {

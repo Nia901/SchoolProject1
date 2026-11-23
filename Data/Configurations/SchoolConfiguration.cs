@@ -14,6 +14,14 @@ namespace Data.Configurations
     {
         public void Configure(EntityTypeBuilder<School> builder)
         {
+            builder.Property(s => s.Name).IsRequired().HasMaxLength(100);
+            builder.Property(s => s.SchoolAddress).IsRequired().HasMaxLength(100);
+            builder.Property(s => s.StudentsCount).IsRequired();
+            builder.Property(s => s.Email).IsRequired();
+            builder.Property(s => s.PhoneNumber).IsRequired();
+            builder.Property(s => s.RoomsCount).IsRequired();
+
+
             builder.HasData(
                 new School
                 {

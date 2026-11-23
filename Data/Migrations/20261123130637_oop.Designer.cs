@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20261118112518_moh")]
-    partial class moh
+    [Migration("20261123130637_oop")]
+    partial class oop
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8810),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4180),
                             Email = "georgikirkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "OU \"Georgi Kirkov\"",
@@ -83,7 +83,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8868),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4236),
                             Email = "nikolaobreshkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "PPMG \"Nikola Obreshkov\"",
@@ -95,7 +95,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8873),
+                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4239),
                             Email = "kirilimetodiischool1@abv.bg",
                             IsDeleted = false,
                             Name = "SU \"Kiril i Metodii\"",
@@ -246,6 +246,11 @@ namespace Data.Migrations
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("YearsOfExperience")
                         .HasColumnType("int");
 
@@ -266,6 +271,7 @@ namespace Data.Migrations
                             LastName = "Koleva",
                             PhoneNumber = "0888 123 876",
                             SchoolId = 1,
+                            Subject = "chemistry",
                             YearsOfExperience = 3
                         },
                         new
@@ -278,6 +284,7 @@ namespace Data.Migrations
                             LastName = "Nenkova",
                             PhoneNumber = "0888 123 876",
                             SchoolId = 2,
+                            Subject = "maths",
                             YearsOfExperience = 10
                         },
                         new
@@ -290,6 +297,7 @@ namespace Data.Migrations
                             LastName = "Kolev",
                             PhoneNumber = "0888 123 333",
                             SchoolId = 3,
+                            Subject = "physics",
                             YearsOfExperience = 12
                         });
                 });
@@ -316,12 +324,17 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Teacher", b =>
                 {
                     b.HasOne("Data.Entities.School", "School")
-                        .WithMany()
+                        .WithMany("Teachers")
                         .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("School");
+                });
+
+            modelBuilder.Entity("Data.Entities.School", b =>
+                {
+                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("Data.Entities.Student", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class mijjj : Migration
+    public partial class oop : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,21 +16,21 @@ namespace Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 55, 9, 433, DateTimeKind.Local).AddTicks(4675));
+                value: new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4180));
 
             migrationBuilder.UpdateData(
                 table: "Schools",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 55, 9, 433, DateTimeKind.Local).AddTicks(4723));
+                value: new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4236));
 
             migrationBuilder.UpdateData(
                 table: "Schools",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 55, 9, 433, DateTimeKind.Local).AddTicks(4726));
+                value: new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4239));
         }
 
         /// <inheritdoc />
@@ -41,21 +41,21 @@ namespace Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8810));
+                value: new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5715));
 
             migrationBuilder.UpdateData(
                 table: "Schools",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8868));
+                value: new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5773));
 
             migrationBuilder.UpdateData(
                 table: "Schools",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreatedOn",
-                value: new DateTime(2026, 11, 18, 13, 25, 18, 403, DateTimeKind.Local).AddTicks(8873));
+                value: new DateTime(2026, 11, 23, 15, 5, 46, 237, DateTimeKind.Local).AddTicks(5777));
         }
     }
 }
