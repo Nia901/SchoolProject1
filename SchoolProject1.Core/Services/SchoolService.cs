@@ -49,7 +49,7 @@ namespace SchoolProject1.Core.Services
         }
         public async Task<School>? GetSchoolByIdAsync(int id)
         {
-            return await context.Schools.FindAsync(id);
+            return await context.Schools.Include(x=>x.Teachers).FirstOrDefaultAsync(x=>x.Id==id);
         }
         public async Task AddSchoolAsync(School school)
         {

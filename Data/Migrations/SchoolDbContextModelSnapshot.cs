@@ -68,7 +68,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4180),
+                            CreatedOn = new DateTime(2026, 11, 24, 14, 18, 0, 422, DateTimeKind.Local).AddTicks(6550),
                             Email = "georgikirkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "OU \"Georgi Kirkov\"",
@@ -80,7 +80,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4236),
+                            CreatedOn = new DateTime(2026, 11, 24, 14, 18, 0, 422, DateTimeKind.Local).AddTicks(6611),
                             Email = "nikolaobreshkovschool1@abv.bg",
                             IsDeleted = false,
                             Name = "PPMG \"Nikola Obreshkov\"",
@@ -92,7 +92,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 11, 23, 15, 6, 37, 613, DateTimeKind.Local).AddTicks(4239),
+                            CreatedOn = new DateTime(2026, 11, 24, 14, 18, 0, 422, DateTimeKind.Local).AddTicks(6614),
                             Email = "kirilimetodiischool1@abv.bg",
                             IsDeleted = false,
                             Name = "SU \"Kiril i Metodii\"",

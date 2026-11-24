@@ -54,7 +54,10 @@ namespace SchoolProject1.Controllers
                 Email=school.Email,
                 PhoneNumber=school.PhoneNumber,
                 RoomsCount=school.RoomsCount,
-                CreatedOn=school.CreatedOn
+                CreatedOn=school.CreatedOn,
+                Teachers = string.Join(", ",
+    school.Teachers.Select(x =>
+        x.FirstName + " " + x.LastName))
             };
             return View(model);
         }

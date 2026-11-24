@@ -12,5 +12,6 @@ namespace SchoolProject1.ViewModels.School
         public string PhoneNumber { get; set; }
         public int RoomsCount { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string Teachers { get; set; }
     }
 }
